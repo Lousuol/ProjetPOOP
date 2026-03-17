@@ -1,5 +1,6 @@
-from collections import Counter
-import re
+"""from collections import Counter"""
+
+from exceptions import TexteVideError
 
 class Texte : # document littéraire avec ses métadonnées et des méthodes d'analyses simples 
   genre_par_defaut = "Texte" # attribut de CLASSE
@@ -7,6 +8,8 @@ class Texte : # document littéraire avec ses métadonnées et des méthodes d'a
   def __init__ (self, titre: str, auteur: str, contenu: str, annee: int):
     self.titre = titre # attributs d'INSTANCE
     self.auteur = auteur
+    if not contenu:
+      raise TexteVideError
     self.contenu = contenu
     self.annee = annee
  
@@ -23,12 +26,12 @@ class Texte : # document littéraire avec ses métadonnées et des méthodes d'a
     return mot.lower() in self.contenu.lower()
 
   def __eq__(self, other):
-    if not isinsistance(other, Texte):
+    if not isinstance(other, Texte):
       return NotImplemented
     return (self.titre, self.auteur, self.annee) == (other.titre, other.auteur, other.annee)
 
   def __add__(self, other):
-    if not isinsistance(other, Texte):
+    if not isinstance(other, Texte):
       return NotImplemented
     return Texte(
       f"{self.titre} + {other.titre}",
@@ -54,7 +57,7 @@ class Texte : # document littéraire avec ses métadonnées et des méthodes d'a
     self._titre = nouveau.strip()
 
 def __lt__(self, other):
-  if not isinsistance(other, Texte):
+  if not isinstance(other, Texte):
     return NotImplemented
   return self.annee < other.annee
 

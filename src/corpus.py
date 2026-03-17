@@ -1,9 +1,11 @@
-from export import Exportateur
-
+from export import ExportateurHTML, ExportateurCSV
 
 class Index:
-    def __init__(self, exportateur: Exportateur):
-        self._entrees: dict[str, list[int]] = {}
+    def __init__(self, nom: str):
+        self.nom = nom
+        self._textes = []
+        self.ExportateurHTML = ExportateurHTML()
+        self.ExportateurCSV = ExportateurCSV()
     def ajouter(self, mot: str, page: int) -> None:
         self._entrees.setdefault(mot, []).append(page)
     def chercher(self, mot: str) -> list[int]:
